@@ -1,0 +1,59 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Shop index
+{% endblock %}
+
+{% block body %}
+    <h1> Hello Shop Index!!!</h1>
+
+ <div>
+     Time running: {{ time_running }}
+     <br> Hello {{ name }}
+  <div>
+     {% lorem 3 p random%}
+ </div>
+
+ <div>
+     <ul>
+         {% for name, price, amount in products %}
+         {% if amount > 0 %}
+         <li>{{ name }} for ${{price}}</li>
+            {% if name|length_is:'7' %}
+<!--               <span>-->
+                   Lucky product.
+<!--               </span>-->
+            {% endif %}
+            {% if price > 1000 %}
+<!--               <span>-->
+                   Expensive product.
+<!--               </span>-->
+            {% endif %}
+         {% endif %}
+         {% empty %}
+            No products here
+         {% endfor %}
+     </ul>
+ </div>
+{% endblock %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Shop Index</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1> Hello Shop Index!!!</h1>-->
+
+<!-- <div>-->
+<!--     Time running: {{ time_running }}-->
+<!--     <br> Hello {{ name }}-->
+<!-- </div>-->
+
+<!-- <div>-->
+<!--     {% lorem 3 p random%}-->
+<!-- </div>-->
+
+<!--</body>-->
+<!--</html>-->
+
