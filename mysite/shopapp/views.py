@@ -1,9 +1,11 @@
+import time
 from timeit import default_timer
 
 from django.contrib.auth.models import Group
 from django.http import HttpResponse, HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 
+from .forms import ProductForm, OrderForm
 from .models import Product, Order
 
 def shop_index(request: HttpRequest):
@@ -43,3 +45,50 @@ def orders_list(request: HttpRequest):
 
     }
     return render(request, 'shopapp/orders-list.html', context=context)
+
+
+def create_product(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            # name = form.cleaned_data["name"]
+            # price = form.cleaned_data["price"]
+            form.save()
+            # Product.objects.create(**form.cleaned_data)
+            url = reverse("shopapp:products_list")
+            time.sleep(1)
+            return redirect(url)
+    else:
+        form = ProductForm()
+    context = {
+        "form": form,
+    }
+
+    return render(request, "shopapp/create-product.html", context=context)
+
+
+def create_order(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        form = OrderForm(request.POST)
+        if form.is_valid():
+    #         # name = form.cleaned_data["name"]
+    #         # price = form.cleaned_data["price"]
+            form_with_user = dict(**form.cleaned_data)
+            current_user = request.user
+            form_with_user['user'] = current_user
+            products = form_with_user.pop('products')
+            order = Order.objects.create(**form_with_user)
+            if products:
+                for product in products:
+                    order.products.add(product)
+                order.save()
+            url = reverse("shopapp:orders_list")
+            time.sleep(1)
+            return redirect(url)
+    else:
+        form = OrderForm()
+    context = {
+        "form": form,
+    }
+
+    return render(request, "shopapp/order-create.html", context=context)

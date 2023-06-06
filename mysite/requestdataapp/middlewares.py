@@ -26,7 +26,7 @@ def throttling_middleware(some_response):
         META_dict = request.META
         IP_adress = META_dict['REMOTE_ADDR']
         IP_record, created = IPAdressLastReqTime.objects.get_or_create(IP_address=IP_adress)
-        min_timedelta = datetime.timedelta(seconds=5)
+        min_timedelta = datetime.timedelta(seconds=1)
         if not created:
             deltatime = datetime.datetime.now() - IP_record.last_req_time.replace(tzinfo=None)
             print(IP_record.last_req_time.replace(tzinfo=None))
