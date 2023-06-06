@@ -69,19 +69,21 @@ def create_product(request: HttpRequest) -> HttpResponse:
 
 def create_order(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        form = OrderForm(request.POST)
+        order = Order(user=request.user)
+        form = OrderForm(request.POST, instance=order)
         if form.is_valid():
-    #         # name = form.cleaned_data["name"]
-    #         # price = form.cleaned_data["price"]
-            form_with_user = dict(**form.cleaned_data)
-            current_user = request.user
-            form_with_user['user'] = current_user
-            products = form_with_user.pop('products')
-            order = Order.objects.create(**form_with_user)
-            if products:
-                for product in products:
-                    order.products.add(product)
-                order.save()
+    # #         # name = form.cleaned_data["name"]
+    # #         # price = form.cleaned_data["price"]
+    #         form_with_user = dict(**form.cleaned_data)
+    #         current_user = request.user
+    #         form_with_user['user'] = current_user
+    #         products = form_with_user.pop('products')
+    #         order = Order.objects.create(**form_with_user)
+    #         if products:
+    #             for product in products:
+    #                 order.products.add(product)
+    #             order.save()
+            form.save()
             url = reverse("shopapp:orders_list")
             time.sleep(1)
             return redirect(url)
