@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'requestdataapp.middlewares.set_useragent_on_request_middleware',
     'requestdataapp.middlewares.CountRequestMiddleware',
-    'requestdataapp.middlewares.throttling_middleware'
+    # 'requestdataapp.middlewares.throttling_middleware'
 
 ]
 
