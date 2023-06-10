@@ -1,5 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth import get_user_model
+
+def get_sentinel_user():
+    return get_user_model().objects.get_or_create(id=1)[0]
 
 
 class Product(models.Model):
@@ -7,13 +11,16 @@ class Product(models.Model):
         ordering = ["name"]
         # db_table = "tech_products"
         # verbose_name_plural = "products"
-
+    created_by = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), null=True)
     name = models.CharField(max_length=100)
     description = models.TextField(null=False, blank=True)
     price = models.DecimalField(default=0, max_digits=8, decimal_places=2)
     discount = models.PositiveSmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
+
+
+
 
 
     @property
@@ -32,4 +39,5 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     products = models.ManyToManyField(Product, related_name="orders")
+
 

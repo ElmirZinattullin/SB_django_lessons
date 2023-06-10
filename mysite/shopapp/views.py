@@ -1,6 +1,7 @@
 import time
 from timeit import default_timer
 
+from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import Group
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse, get_object_or_404
@@ -72,13 +73,31 @@ class ProductsListView(ListView):
 #     return render(request, 'shopapp/products-list.html', context=context)
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'shopapp.add_product'
     model = Product
     fields = 'name', 'price', 'description', 'discount'
     success_url = reverse_lazy('shopapp:products_list')
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        #
+        # form1 = form
+        # self.object = form.save()
+        return super().form_valid(form)
 
-class ProductUpdateView(UpdateView):
+        # return HttpResponseRedirect(self.get_success_url())
+
+
+class ProductUpdateView(UserPassesTestMixin, UpdateView):
+
+    def test_func(self):
+        perms = ('shopapp.change_product', )
+        user_has_perms = self.request.user.has_perms(perms)
+        access = user_has_perms or (self.get_object().created_by == self.request.user)
+        return access
+
+
     model = Product
     fields = 'name', 'price', 'description', 'discount'
     template_name_suffix = '_update_form'

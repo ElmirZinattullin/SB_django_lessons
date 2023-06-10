@@ -20,10 +20,11 @@
     {% else %}
         <h3>No products</h3>
     {% endif %}
-
+    {% if 'shopapp.add_product' in perms %}
     <div>
         <a href="{% url 'shopapp:product_create' %}">
             Create a new product
         </a>
     </div>
+    {% endif %}
 {% endblock %}
