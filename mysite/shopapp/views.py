@@ -1,9 +1,10 @@
 import time
 from timeit import default_timer
 
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import Group
-from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
+from django.contrib.auth.models import Group, User
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
@@ -73,8 +74,9 @@ class ProductsListView(ListView):
 #     return render(request, 'shopapp/products-list.html', context=context)
 
 
-class ProductCreateView(PermissionRequiredMixin, CreateView):
-    permission_required = 'shopapp.add_product'
+class ProductCreateView(CreateView):
+# class ProductCreateView(PermissionRequiredMixin, CreateView):
+    # permission_required = 'shopapp.add_product'
     model = Product
     fields = 'name', 'price', 'description', 'discount'
     success_url = reverse_lazy('shopapp:products_list')
@@ -124,15 +126,23 @@ class OrdersListView(ListView):
     queryset = (Order.objects.select_related("user").prefetch_related("products"))
 
 
-class OrderDetailView(DetailView):
+class OrderDetailView(PermissionRequiredMixin, DetailView):
+    permission_required = 'shopapp.view_order'
     queryset = (Order.objects.select_related("user").prefetch_related("products"))
 
 
 class OrderCreateView(CreateView):
     # queryset = (Order.objects.select_related("user").prefetch_related("products"))
     model = Order
-    fields = 'delivery_address', 'promocode', 'user', 'products'
+    fields = 'delivery_address', 'promocode', 'products'
     success_url = reverse_lazy('shopapp:orders_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        #
+        # form1 = form
+        # self.object = form.save()
+        return super().form_valid(form)
 
 
 class OrderUpdateView(UpdateView):
@@ -150,6 +160,38 @@ class OrderUpdateView(UpdateView):
 class OrderDeleteView(DeleteView):
     model = Order
     success_url = reverse_lazy('shopapp:orders_list')
+
+
+class OrdersDataExportView(UserPassesTestMixin, View):
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def get(self, request:HttpRequest) -> JsonResponse:
+        orders=Order.objects.order_by('pk').all()
+        orders_data = list()
+        for order in orders:
+            product_id_list = list()
+            # for product in order.products.get:
+            #     product_id_list.append(product.pk)
+            products = order.products.filter(orders=order)
+            for product in products:
+                product_id_list.append(product.pk)
+            print(products)
+            order_data = {
+                    'ID': order.pk,
+                    'address': order.delivery_address,
+                    'promocode': order.promocode,
+                    'user_ID': order.user.pk,
+                    'products_id': product_id_list
+
+                }
+            orders_data.append(order_data)
+        return JsonResponse({'orders': orders_data})
+
+
+
+
 
 
 # def orders_list(request: HttpRequest):
