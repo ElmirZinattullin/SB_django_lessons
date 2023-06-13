@@ -72,20 +72,17 @@ class OrderDetailViewTestCase(TestCase):
 
 
 class OrdersExportTestCase(TestCase):
-    fixtures = ['products-fixtures.json', 'orders-fixtures.json', 'users-fixtures.json']
-
-    @classmethod
-    def setUpClass(cls):
-        cls.user = User.objects.create_user(username='Gosha_test', password='thisismypassword')
-        cls.user.is_staff = True
-        cls.user.save()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.user.delete()
+    fixtures = ['groups-fixtures.json', 'users-fixtures.json', 'products-fixtures.json', 'orders-fixtures.json']
 
     def setUp(self) -> None:
+        self.user = User.objects.create_user(username='Gosha_test', password='thisismypassword')
+        self.user.is_staff = True
+        self.user.save()
         self.client.force_login(self.user)
+
+
+    def tearDown(self) -> None:
+        self.user.delete()
 
     def test_get_orders_export(self):
         response = self.client.get(reverse('shopapp:orders_export'))
@@ -100,6 +97,7 @@ class OrdersExportTestCase(TestCase):
             for order in orders]
         expected_data = order_list
         orders_data = response.json()
+        # print(expected_data)
         self.assertEquals(
             orders_data['orders'],
             expected_data
