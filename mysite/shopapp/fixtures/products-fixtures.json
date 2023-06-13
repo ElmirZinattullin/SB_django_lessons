@@ -1,0 +1,106 @@
+[
+  {
+    "model": "shopapp.product",
+    "pk": 1,
+    "fields": {
+      "created_by": null,
+      "name": "Laptop",
+      "description": "Iusto odio libero voluptatibus, hic quibusdam mollitia, aspernatur vel porro recusandae, inventore tempora fugiat nostrum odit deleniti fuga mollitia autem reiciendis aperiam, fugiat consequatur asperiores temporibus quam rem repellat. Eum voluptatem eaque dolor asperiores vel sint qui reprehenderit, labore ullam fugit alias tenetur adipisci iure dignissimos quos aut dolores, architecto voluptatem ex sunt corporis. Dolorum facilis impedit blanditiis officia libero quos accusantium sunt praesentium tempore, aperiam modi voluptatibus laudantium illo, ea ipsam natus id nulla obcaecati neque iusto ipsum necessitatibus inventore non, nam dolorem saepe quod consequatur facilis?",
+      "price": "1999.00",
+      "discount": 0,
+      "created_at": "2023-05-28T18:20:46.647Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 2,
+    "fields": {
+      "created_by": null,
+      "name": "Desktop",
+      "description": "",
+      "price": "2599.00",
+      "discount": 10,
+      "created_at": "2023-05-28T18:20:46.647Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 5,
+    "fields": {
+      "created_by": null,
+      "name": "Phone2",
+      "description": "phone2 is better than phone1\r\nthis is a great phone",
+      "price": "1234.00",
+      "discount": 0,
+      "created_at": "2023-06-05T18:38:01.763Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 18,
+    "fields": {
+      "created_by": null,
+      "name": "Smartphone",
+      "description": "Smartphone",
+      "price": "123.00",
+      "discount": 5,
+      "created_at": "2023-06-07T18:16:46.330Z",
+      "archived": true
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 19,
+    "fields": {
+      "created_by": null,
+      "name": "",
+      "description": "",
+      "price": "0.00",
+      "discount": 0,
+      "created_at": "2023-06-10T19:34:46.899Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 20,
+    "fields": {
+      "created_by": 14,
+      "name": "New",
+      "description": "1234",
+      "price": "123.00",
+      "discount": 1,
+      "created_at": "2023-06-10T19:53:31.386Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 21,
+    "fields": {
+      "created_by": 14,
+      "name": "tablte",
+      "description": "asdf",
+      "price": "123.00",
+      "discount": 1,
+      "created_at": "2023-06-10T19:53:43.801Z",
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 22,
+    "fields": {
+      "created_by": 2,
+      "name": "Sam_product",
+      "description": "Sam_cre",
+      "price": "100.00",
+      "discount": 0,
+      "created_at": "2023-06-10T21:49:27.472Z",
+      "archived": false
+    }
+  }
+]
