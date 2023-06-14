@@ -78,7 +78,7 @@ class ProductCreateView(CreateView):
 # class ProductCreateView(PermissionRequiredMixin, CreateView):
     # permission_required = 'shopapp.add_product'
     model = Product
-    fields = 'name', 'price', 'description', 'discount'
+    fields = 'name', 'price', 'description', 'discount', 'preview'
     success_url = reverse_lazy('shopapp:products_list')
 
     def form_valid(self, form):
@@ -101,7 +101,7 @@ class ProductUpdateView(UserPassesTestMixin, UpdateView):
 
 
     model = Product
-    fields = 'name', 'price', 'description', 'discount'
+    fields = 'name', 'price', 'description', 'discount', 'preview'
     template_name_suffix = '_update_form'
 
     def get_success_url(self):

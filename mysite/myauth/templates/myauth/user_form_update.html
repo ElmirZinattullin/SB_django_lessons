@@ -1,0 +1,25 @@
+{% extends 'myauth/base.html' %}
+
+{% block title %}
+    Update {{account}}
+{% endblock %}
+
+{% block body %}
+    <h1>User info update</h1>
+        <h1>User: {{account.user.username}}</h1>
+            {% if account.avatar %}
+                <img src="{{account.avatar.url}}" alt="{{account.avatar.name}}">
+            {% endif %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p>{{form.as_p}}</p>
+                <button type="submit">Save</button>
+            </form>
+<div>
+    <p>
+        <a href="{% url 'myauth:users-list' %}">
+            Back to users list
+        </a>
+    </p>
+</div>
+{% endblock %}

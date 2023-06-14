@@ -9,10 +9,37 @@
     {% if user.is_authenticated %}
         <h2>Detail</h2>
         <p>Username: {{user.username}}</p>
+            {% if user.profile.avatar %}
+                <img src="{{user.profile.avatar.url}}" alt="{{user.profile.avatar.name}}">
+            {% else %}
+                Avatar is not upload yet
+            {% endif %}
         <p>First name: {{user.first_name}}</p>
         <p>Last name: {{user.last_name}}</p>
         <p>Email: {{user.email}}</p>
-        <p>Bio: {{user.profile.bio}}</p>
+        <div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                <p>{{form.as_p}}</p>
+                <p></p>
+<!--                {% if user.profile.avatar %}-->
+<!--                    <img src="{{avatar.url}}" alt="{{avatar.name}}">-->
+<!--                {% endif %}-->
+
+
+<!--            <p>Bio: {{user.profile.bio}}</p>-->
+<!--            {% if user.profile.avatar %}-->
+<!--                <img src="{{user.profile.avatar.url}}" alt="{{user.profile.avatar.name}}">-->
+<!--            {% else %}-->
+<!--                Avatar is not upload yet-->
+<!--            {% endif %}-->
+            <br>
+            <button type="submit">
+                Save
+            </button>
+        </form>
+        </div>
+
     {% else %}
         User is anonymous
     {% endif %}

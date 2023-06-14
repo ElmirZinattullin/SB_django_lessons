@@ -8,7 +8,7 @@ Update order #{{object.pk}}
 {% block body %}
     <h1>Update order #{{object.pk}}</h1>
     <div>
-        <form method="post">
+        <form method="post" >
         {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Update</button>

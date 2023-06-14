@@ -6,6 +6,13 @@ def get_sentinel_user():
     return get_user_model().objects.get_or_create(id=1)[0]
 
 
+def product_preview_directory_path(instanse:"Product", filename: str) -> str:
+    return "products/product_{pk}/preview/{filename}".format(
+        pk=instanse.pk,
+        filename=filename
+    )
+
+
 class Product(models.Model):
     class Meta:
         ordering = ["name"]
@@ -18,6 +25,7 @@ class Product(models.Model):
     discount = models.PositiveSmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
+    preview = models.ImageField(null=True, blank=True, upload_to=product_preview_directory_path)
 
 
 
@@ -39,5 +47,6 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     products = models.ManyToManyField(Product, related_name="orders")
+    receipt = models.FileField(null=True, upload_to='orders/receipts')
 
 

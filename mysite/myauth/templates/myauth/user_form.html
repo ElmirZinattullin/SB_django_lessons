@@ -1,0 +1,32 @@
+{% extends 'myauth/base.html' %}
+
+{% block title %}
+    About {{account}}
+{% endblock %}
+
+{% block body %}
+    <h1>User info</h1>
+    {% if user.is_authenticated %}
+        <h2>Detail</h2>
+        <p>Username: {{account.username}}</p>
+            {% if account.profile.avatar %}
+                <img src="{{account.profile.avatar.url}}" alt="{{account.profile.avatar.name}}">
+            {% else %}
+                Avatar is not upload yet
+            {% endif %}
+        <p>First name: {{account.first_name}}</p>
+        <p>Last name: {{account.last_name}}</p>
+        <p>Email: {{account.email}}</p>
+        <p>Bio: {{account.profile.bio}}</p>
+        {% if user.is_superuser %}
+            <p> <a href="{% url 'myauth:account_update' pk=account.profile.pk %}">Change</a></p>
+        {% endif %}
+    {% else %}
+        Login for looking
+    {% endif %}
+<!--    <form method="post">-->
+<!--        {% csrf_token %}-->
+<!--        {{form.as_p}}-->
+<!--        <button type="submit">Login</button>-->
+<!--    </form>-->
+{% endblock %}
