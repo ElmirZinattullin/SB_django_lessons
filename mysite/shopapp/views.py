@@ -1,5 +1,6 @@
 import time
 from timeit import default_timer
+from random import choice
 
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
@@ -22,7 +23,8 @@ class ShopIndexView(View):
         context = {
             "time_running": default_timer(),
             "name": "Elmir",
-            "products": products
+            "products": products,
+            "items": 3
 
         }
         return render(request, 'shopapp/shop-index.html', context=context)
@@ -48,6 +50,7 @@ class ProductDetailView(DetailView):
     template_name = "shopapp/product-details.html"
     model = Product
     context_object_name = 'product'
+    extra_context = {'images_amount': [1, 2, 5, 0]}
     # def get(self, request: HttpRequest, pk: int) -> HttpResponse:
     #     product = get_object_or_404(Product, pk=pk)
     #     context ={

@@ -11,7 +11,8 @@ from .views import (MyLogoutView,
                     FooBarView,
                     UserListView,
                     AccountDetailsView,
-                    AccountUpdateView)
+                    AccountUpdateView,
+                    HelloView)
 
 # from .views import
 
@@ -24,6 +25,7 @@ urlpatterns = [
              redirect_authenticated_user=True,
          ),
          name="login"),
+    path('hello/', HelloView.as_view(), name='hello'),
     path('logout/', MyLogoutView.as_view(), name='logout'),
     path('about-me/', AboutMeView.as_view(), name='about-me'),
     path('', UserListView.as_view(), name='users-list'),

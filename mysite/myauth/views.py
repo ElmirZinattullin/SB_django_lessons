@@ -9,12 +9,28 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, CreateView, UpdateView, ListView, DetailView
 from django.views.generic.edit import BaseUpdateView, ProcessFormView
+from django.utils.translation import gettext as _, ngettext
 
 from .models import Profile
 from .forms import ProfileForm
 
 
 # Create your views here.
+
+class HelloView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        welcome_message = _('Hello world!')
+        items_str = request.GET.get('items') or 0
+        items = int(items_str)
+        products_line = ngettext('one product',
+                                 '{count} products',
+                                 items,
+                                 )
+        products_line = products_line.format(count=items)
+        return HttpResponse(
+            f'<h1>{welcome_message}</h1>'
+            f'<h2>{products_line}</h2>'
+        )
 
 class AboutMeView(View):
     template_name = 'myauth/about-me.html'

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(id=1)[0]
@@ -18,6 +19,8 @@ class Product(models.Model):
         ordering = ["name"]
         # db_table = "tech_products"
         # verbose_name_plural = "products"
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
     created_by = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), null=True)
     name = models.CharField(max_length=100)
     description = models.TextField(null=False, blank=True)
@@ -26,10 +29,6 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(default=False)
     preview = models.ImageField(null=True, blank=True, upload_to=product_preview_directory_path)
-
-
-
-
 
     @property
     def description_short(self) -> str:
@@ -42,6 +41,10 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+    class Meta:
+        verbose_name = _('Order')
+        verbose_name_plural = _('Orders')
+
     delivery_address = models.TextField(null=True, blank=True)
     promocode = models.CharField(max_length=20, null=False, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
