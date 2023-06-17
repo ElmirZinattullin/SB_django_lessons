@@ -15,6 +15,12 @@ def product_preview_directory_path(instanse:"Product", filename: str) -> str:
 
 
 class Product(models.Model):
+    """
+    Модель Product представляет товар,
+    который можно продавать в магазине
+
+    Заказы тут: :model: `shopapp.Order`
+    """
     class Meta:
         ordering = ["name"]
         # db_table = "tech_products"
