@@ -1,4 +1,6 @@
-from django.urls import path
+from django.urls import path, include
+
+from rest_framework.routers import DefaultRouter
 
 from .views import (ShopIndexView,
                     GroupsListView,
@@ -15,9 +17,14 @@ from .views import (ShopIndexView,
                     OrderCreateView,
                     OrderUpdateView,
                     OrderDeleteView,
-                    OrdersDataExportView)
+                    OrdersDataExportView,
+                    ProductViewSet, OrderViewSet, )
 
 app_name = "shopapp"
+
+routers = DefaultRouter()
+routers.register("products", ProductViewSet)
+routers.register("orders", OrderViewSet)
 
 urlpatterns = [
     path("", ShopIndexView.as_view(), name="index"),
@@ -33,5 +40,6 @@ urlpatterns = [
     path("orders/<int:pk>/update/", OrderUpdateView.as_view(), name='order_update'),
     path("orders/export/", OrdersDataExportView.as_view(), name='orders_export'),
     path("products/<int:pk>/confirm-delete/", OrderDeleteView.as_view(), name='order_delete'),
+    path('api/', include(routers.urls)),
 
 ]

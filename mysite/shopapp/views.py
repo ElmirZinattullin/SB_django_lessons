@@ -10,9 +10,50 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .forms import ProductForm, OrderForm, GroupForm
 from .models import Product, Order
+from .serializers import ProductSerializer, OrderSerializer
+
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+    search_fields = ['name', 'description',]
+    filterset_fields = [
+        'name',
+        'description',
+        'price',
+        'discount',
+        'archived',
+    ]
+    ordering_fields = [
+        "name",
+        "price",
+        "discount",
+    ]
+
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+    search_fields = ['products', 'user',]
+    filterset_fields = [
+            "delivery_address",
+            "promocode",
+            "created_at",
+            "user",
+            "products",
+    ]
+    ordering_fields = [
+        "user",
+        "created_at",
+    ]
 
 
 class ShopIndexView(View):
