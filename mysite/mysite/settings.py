@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     "requestdataapp.apps.RequestdataappConfig",
     'myauth.apps.MyauthConfig',
     'myapiapp.apps.MyapiappConfig',
+    'blogapp.apps.BlogappConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -169,3 +171,78 @@ SPECTACULAR_SETTINGS = {
     "VERSION": '1.0.0',
     "SERVE_INCLUDE_SCHEMA": False,
 }
+
+LOGGING = {
+    "version": 1,
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        }
+        # "console": {
+        #     "level": "DEBUG",
+        #     "filters": ["require_debug_true"],
+        #     "class": "logging.StreamHandler",
+        # },
+    },
+    "loggers": {
+        "django.db.backends": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+        }
+    }
+}
+
+# DEFAULT_LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "filters": {
+#         "require_debug_false": {
+#             "()": "django.utils.log.RequireDebugFalse",
+#         },
+#         "require_debug_true": {
+#             "()": "django.utils.log.RequireDebugTrue",
+#         },
+#     },
+#     "formatters": {
+#         "django.server": {
+#             "()": "django.utils.log.ServerFormatter",
+#             "format": "[{server_time}] {message}",
+#             "style": "{",
+#         }
+#     },
+#     "handlers": {
+#         "console": {
+#             "level": "INFO",
+#             "filters": ["require_debug_true"],
+#             "class": "logging.StreamHandler",
+#         },
+#         "django.server": {
+#             "level": "INFO",
+#             "class": "logging.StreamHandler",
+#             "formatter": "django.server",
+#         },
+#         "mail_admins": {
+#             "level": "ERROR",
+#             "filters": ["require_debug_false"],
+#             "class": "django.utils.log.AdminEmailHandler",
+#         },
+#     },
+#     "loggers": {
+#         "django": {
+#             "handlers": ["console", "mail_admins"],
+#             "level": "INFO",
+#         },
+#         "django.server": {
+#             "handlers": ["django.server"],
+#             "level": "INFO",
+#             "propagate": False,
+#         },
+#     },
+# }
