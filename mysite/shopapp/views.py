@@ -5,6 +5,7 @@
 """
 
 import time
+import logging
 from timeit import default_timer
 
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
@@ -22,6 +23,9 @@ from drf_spectacular.utils import extend_schema, OpenApiResponse
 from .forms import GroupForm
 from .models import Product, Order
 from .serializers import ProductSerializer, OrderSerializer
+
+
+log = logging.getLogger(__name__)
 
 @extend_schema(description="Product views CRUD")
 class ProductViewSet(ModelViewSet):
@@ -87,6 +91,8 @@ class ShopIndexView(View):
             "items": 3
 
         }
+        log.debug("products for shop index: %s", products)
+        log.info("Rendering shop index")
         return render(request, 'shopapp/shop-index.html', context=context)
 
 
@@ -253,7 +259,21 @@ class OrdersDataExportView(UserPassesTestMixin, View):
         return JsonResponse({'orders': orders_data})
 
 
-
+class ProductsDataExportView(View):
+    def get(self, request:HttpRequest) -> JsonResponse:
+        products = Product.objects.order_by('pk').all()
+        products_data = [
+            {
+                "pk": product.pk,
+                "name": product.name,
+                "price": product.price,
+            }
+            for product in products
+        ]
+        elem = products_data[0]
+        name = elem['name']
+        print('name:', name)
+        return JsonResponse({"products": products_data})
 
 
 
