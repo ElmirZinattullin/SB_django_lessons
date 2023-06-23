@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(id=1)[0]
@@ -44,6 +45,9 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return f"Product (pk={self.pk}, name={self.name!r})"
+
+    def get_absolute_url(self):
+        return reverse("shopapp:product_details", kwargs={"pk": self.pk})
 
 
 class Order(models.Model):

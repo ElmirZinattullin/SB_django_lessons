@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -22,3 +23,13 @@ class Article(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name="articles")
+
+
+class NewArticle(models.Model):
+    title = models.CharField(max_length=100)
+    body = models.TextField(null=True, blank=True)
+    published_at = models.DateTimeField(null=True, blank=True)
+
+
+    def get_absolute_url(self):
+        return reverse("blogapp:newarticle", kwargs={"pk": self.pk})

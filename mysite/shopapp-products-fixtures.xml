@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+    <object model="shopapp.product" pk="1">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">
+            <None></None>
+        </field>
+        <field name="name" type="CharField">Laptop</field>
+        <field name="description" type="TextField">Iusto odio libero voluptatibus, hic quibusdam mollitia, aspernatur
+            vel porro recusandae, inventore tempora fugiat nostrum odit deleniti fuga mollitia autem reiciendis aperiam,
+            fugiat consequatur asperiores temporibus quam rem repellat. Eum voluptatem eaque dolor asperiores vel sint
+            qui reprehenderit, labore ullam fugit alias tenetur adipisci iure dignissimos quos aut dolores, architecto
+            voluptatem ex sunt corporis. Dolorum facilis impedit blanditiis officia libero quos accusantium sunt
+            praesentium tempore, aperiam modi voluptatibus laudantium illo, ea ipsam natus id nulla obcaecati neque
+            iusto ipsum necessitatibus inventore non, nam dolorem saepe quod consequatur facilis?
+        </field>
+        <field name="price" type="DecimalField">1999.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">0</field>
+        <field name="created_at" type="DateTimeField">2023-05-28T18:20:46.647675+00:00</field>
+        <field name="archived" type="BooleanField">False</field>
+        <field name="preview" type="FileField"></field>
+    </object>
+    <object model="shopapp.product" pk="2">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">
+            <None></None>
+        </field>
+        <field name="name" type="CharField">Desktop</field>
+        <field name="description" type="TextField"></field>
+        <field name="price" type="DecimalField">13.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">13</field>
+        <field name="created_at" type="DateTimeField">2023-05-28T18:20:46.647675+00:00</field>
+        <field name="archived" type="BooleanField">False</field>
+        <field name="preview" type="FileField">products/product_2/preview/123.png</field>
+    </object>
+    <object model="shopapp.product" pk="5">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">
+            <None></None>
+        </field>
+        <field name="name" type="CharField">Phone2</field>
+        <field name="description" type="TextField">phone2 is better than phone1
+            this is a great phone
+        </field>
+        <field name="price" type="DecimalField">1234.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">0</field>
+        <field name="created_at" type="DateTimeField">2023-06-05T18:38:01.763798+00:00</field>
+        <field name="archived" type="BooleanField">False</field>
+        <field name="preview" type="FileField"></field>
+    </object>
+    <object model="shopapp.product" pk="18">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">
+            <None></None>
+        </field>
+        <field name="name" type="CharField">Smartphone</field>
+        <field name="description" type="TextField">Smartphone</field>
+        <field name="price" type="DecimalField">123.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">5</field>
+        <field name="created_at" type="DateTimeField">2023-06-07T18:16:46.330547+00:00</field>
+        <field name="archived" type="BooleanField">True</field>
+        <field name="preview" type="FileField"></field>
+    </object>
+    <object model="shopapp.product" pk="19">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">
+            <None></None>
+        </field>
+        <field name="name" type="CharField"></field>
+        <field name="description" type="TextField"></field>
+        <field name="price" type="DecimalField">0.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">0</field>
+        <field name="created_at" type="DateTimeField">2023-06-10T19:34:46.899351+00:00</field>
+        <field name="archived" type="BooleanField">False</field>
+        <field name="preview" type="FileField"></field>
+    </object>
+    <object model="shopapp.product" pk="20">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">14</field>
+        <field name="name" type="CharField">New</field>
+        <field name="description" type="TextField">1234</field>
+        <field name="price" type="DecimalField">123.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">1</field>
+        <field name="created_at" type="DateTimeField">2023-06-10T19:53:31.386205+00:00</field>
+        <field name="archived" type="BooleanField">False</field>
+        <field name="preview" type="FileField"></field>
+    </object>
+    <object model="shopapp.product" pk="21">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">14</field>
+        <field name="name" type="CharField">tablte</field>
+        <field name="description" type="TextField">asdf</field>
+        <field name="price" type="DecimalField">123.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">1</field>
+        <field name="created_at" type="DateTimeField">2023-06-10T19:53:43.801294+00:00</field>
+        <field name="archived" type="BooleanField">False</field>
+        <field name="preview" type="FileField"></field>
+    </object>
+    <object model="shopapp.product" pk="22">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">2</field>
+        <field name="name" type="CharField">Sam_product</field>
+        <field name="description" type="TextField">Sam_cre</field>
+        <field name="price" type="DecimalField">100.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">0</field>
+        <field name="created_at" type="DateTimeField">2023-06-10T21:49:27.472524+00:00</field>
+        <field name="archived" type="BooleanField">False</field>
+        <field name="preview" type="FileField"></field>
+    </object>
+    <object model="shopapp.product" pk="23">
+        <field name="created_by" rel="ManyToOneRel" to="auth.user">
+            <None></None>
+        </field>
+        <field name="name" type="CharField">headphone</field>
+        <field name="description" type="TextField">new headphone</field>
+        <field name="price" type="DecimalField">199.00</field>
+        <field name="discount" type="PositiveSmallIntegerField">10</field>
+        <field name="created_at" type="DateTimeField">2023-06-16T18:34:38.486075+00:00</field>
+        <field name="archived" type="BooleanField">False</field>
+        <field name="preview" type="FileField"></field>
+    </object>
+</django-objects>

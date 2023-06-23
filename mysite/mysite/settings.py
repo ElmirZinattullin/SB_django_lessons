@@ -15,12 +15,12 @@ from pathlib import Path
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-import sentry_sdk
-
-sentry_sdk.init(
-    dsn="https://93e33c9d4b454d16a83c6c7e40f24b85@o4505399017406464.ingest.sentry.io/****",
-    traces_sample_rate=1.0,
-)
+# import sentry_sdk
+#
+# sentry_sdk.init(
+#     dsn="https://93e33c9d4b454d16a83c6c7e40f24b85@o4505399017406464.ingest.sentry.io/****",
+#     traces_sample_rate=1.0,
+# )
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'django.contrib.sitemaps',
 
     "debug_toolbar",
     'rest_framework',
