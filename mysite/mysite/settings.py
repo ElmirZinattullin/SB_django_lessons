@@ -119,6 +119,13 @@ DATABASES = {
     }
 }
 
+CACHE = {
+    "default": {
+        "BACKENDS": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": '/home/elmir/PycharmProjects/python_django/cache/django',
+    },
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

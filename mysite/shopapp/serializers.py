@@ -3,6 +3,16 @@ from django.contrib.auth.models import User
 
 from .models import Product, Order
 
+
+class NewProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = (
+            "pk",
+            "name",)
+
+
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
@@ -31,6 +41,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    products = NewProductSerializer(many=True)
 
     class Meta:
         model = Order

@@ -3,16 +3,17 @@
 
  Различные view для интернет-магазина: по товаром, заказам и т.д.
 """
-
+import io
 import time
+import datetime
 import logging
 from timeit import default_timer
 from csv import DictWriter
 
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -25,6 +26,8 @@ from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, OpenApiResponse
+from django.core.cache import cache
+
 
 from .forms import GroupForm
 from .models import Product, Order
@@ -265,6 +268,33 @@ class OrderDetailView(PermissionRequiredMixin, DetailView):
     queryset = (Order.objects.select_related("user").prefetch_related("products"))
 
 
+class UserOrderListView(UserPassesTestMixin, ListView):
+    template_name = "shopapp/userorders_list.html"
+    # queryset = Order.objects.select_related("user").prefetch_related("products")
+
+    def set_queriset(self):
+        self.queryset = Order.objects.select_related("user").prefetch_related("products").filter(user=self.owner)
+        return self.queryset
+
+    def set_owner(self, user_id):
+        self.owner = get_object_or_404(User, id=user_id)
+        return self.owner
+
+    def test_func(self):
+        return self.request.user.is_authenticated
+
+
+    def get(self, request, *args, **kwargs):
+        user_id = kwargs["user_id"]
+        self.set_owner(user_id)
+        self.set_queriset()
+        return super().get(self, request, *args, **kwargs)
+
+    def get_context_data(self, *arg, **kwargs):
+        context_data = super().get_context_data(*arg, **kwargs)
+        context_data['owner'] = self.owner
+        return context_data
+
 class OrderCreateView(CreateView):
     # queryset = (Order.objects.select_related("user").prefetch_related("products"))
     model = Order
@@ -339,6 +369,29 @@ class ProductsDataExportView(View):
         name = elem['name']
         print('name:', name)
         return JsonResponse({"products": products_data})
+
+
+class UserOrdersDataExportView(UserPassesTestMixin, View):
+
+    def test_func(self):
+        return self.request.user.is_authenticated
+
+    def set_owner(self, user_id):
+        self.owner = get_object_or_404(User, id=user_id)
+        return self.owner
+
+
+    def get(self, request:HttpRequest, *arg, **kwargs) -> JsonResponse:
+        owner_id = kwargs["user_id"]
+        cache_key = f"orders_data_export_{owner_id}"
+        orders_data = cache.get(cache_key)
+        if orders_data is None:
+            self.set_owner(owner_id)
+            orders = Order.objects.order_by('pk').filter(user=self.owner).prefetch_related("products").filter(user=self.owner)
+            serializer = OrderSerializer(orders, many=True)
+            orders_data = list(serializer.data)
+            cache.set(cache_key, orders_data, 100)
+        return JsonResponse({'orders': orders_data, 'download_time': datetime.datetime.now()})
 
 
 
